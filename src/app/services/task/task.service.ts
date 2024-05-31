@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { Task } from '../../models/task';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-export class TaskServiceService {
+export class TaskService {
   private storageKey = 'tasks';
   private tasks: Task[] = [];
   private nextId: number;
@@ -12,35 +12,46 @@ export class TaskServiceService {
   constructor() {
     const tasksJson = localStorage.getItem(this.storageKey);
     this.tasks = tasksJson ? JSON.parse(tasksJson) : [];
-    this.nextId = this.tasks.length ? Math.max(...this.tasks.map(t => t.id)) + 1 : 1;
-   }
+    this.nextId = this.tasks.length
+      ? Math.max(...this.tasks.map((t) => t.id)) + 1
+      : 1;
+  }
 
-  get(): Task[] {    
+  get(): Task[] {
     return this.tasks;
   }
+
+  getItem(id: number): Task {
+    let item = this.tasks.find((t) => t.id == id);
+
+    if (!item) {
+      return { id: 0, title: '', isCompleted: false };
+    }
+
+    return item;
+  }
+
 
   private save(): void {
     const tasksJson = JSON.stringify(this.tasks);
     localStorage.setItem(this.storageKey, tasksJson);
   }
 
-  add(task: Task): void {
-    const tasks = this.get();
-    tasks.push(task);
+  delete(taskId: number): void {
+    this.tasks = this.tasks.filter((t) => t.id !== taskId);
     this.save();
   }
 
-  delete(taskId: number): void {
-    let tasks = this.get();
-    tasks = tasks.filter(t => t.id !== taskId);
+  add(nweTask: Task): void {
+    nweTask.id = this.nextId++;
+    this.tasks.push(nweTask);
     this.save();
   }
 
   update(updatedTask: Task): void {
-    const tasks = this.get();
-    const index = tasks.findIndex(t => t.id === updatedTask.id);
+    const index = this.tasks.findIndex((t) => t.id === updatedTask.id);
     if (index !== -1) {
-      tasks[index] = updatedTask;
+      this.tasks[index] = updatedTask;
       this.save();
     }
   }
