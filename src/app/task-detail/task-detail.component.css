@@ -6,3 +6,12 @@ form > * {
     padding-inline: 5px;
     box-sizing: border-box;
 }
+
+button {
+    margin-inline: 5px;
+}
+
+.right {
+    display: flex;
+    justify-content: flex-end;
+}

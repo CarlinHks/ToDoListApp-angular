@@ -18,7 +18,6 @@ import { TaskService } from '../services/task/task.service';
     MatTableModule,
     MatCardModule,
     MatDividerModule,
-    MatButtonModule,
     MatProgressBarModule,
     MatButtonModule,
     MatDividerModule,
