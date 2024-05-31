@@ -1,1 +1,20 @@
-<p>task-detail works!</p>
+<form>
+  <mat-form-field style="width: 10%; ">
+    <input matInput placeholder="ID"  [(ngModel)]="task.id" name="id" disabled />
+  </mat-form-field>
+
+  <mat-form-field style="width: 90%">
+    <input matInput placeholder="Title" [(ngModel)]="task.title" name="title" />
+  </mat-form-field>
+
+  <mat-checkbox
+    [(ngModel)]="task.isCompleted"
+    name="isCompleted"
+    style="width: 100%"
+    >Completed</mat-checkbox
+  >
+
+  <button mat-raised-button color="primary" (click)="submitForm()">
+    Submit
+  </button>
+</form>
