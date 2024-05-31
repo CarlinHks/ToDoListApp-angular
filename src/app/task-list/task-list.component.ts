@@ -26,7 +26,7 @@ import { TaskService } from '../services/task/task.service';
   ],
 })
 export class TaskListComponent implements OnInit {
-  displayedColumns: string[] = ['id', 'title', 'isCompleted', 'edit'];
+  displayedColumns: string[] = ['id', 'title', 'isCompleted', 'edit', 'delete'];
   tasks: Task[] = []
   
   constructor(private _router: Router, private _taskService: TaskService) {}
@@ -37,5 +37,10 @@ export class TaskListComponent implements OnInit {
 
   public goToDetail(id: number) {
     this._router.navigate(['/task', id]);
+  }
+
+  public deleteTask(id: number) {
+    this._taskService.delete(id);
+    this.tasks = this._taskService.get();
   }
 }
